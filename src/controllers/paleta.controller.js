@@ -1,20 +1,21 @@
 const paletasService = require("../services/paleta.service");
+const mongoose = require("mongoose");
 
-const findAllPaletasController = (req, res) => {
-  const paletas = paletasService.findAllPaletasService();
+const findAllPaletasController = async (req, res) => {
+  const paletas = await paletasService.findAllPaletasService();
   if (paletas.length == 0) {
     return res.status(404).send({ message: "Não existe paleta cadastrada" });
   }
   res.send(paletas);
 };
 
-const findByIdPaletaController = (req, res) => {
-  const parametroId = Number(req.params.id);
+const findByIdPaletaController = async (req, res) => {
+  const parametroId = req.params.id;
 
-  if (!parametroId) {
+  if (!mongoose.Types.ObjectId.isValid(parametroId)) {
     return res.status(400).send({ message: "ID Inválido" });
   }
-  const escolhaPaleta = paletasService.findByIdPaletaService(parametroId);
+  const escolhaPaleta = await paletasService.findByIdPaletaService(parametroId);
   if (!escolhaPaleta) {
     return res.status(404).send({ message: "Paleta Não Encontrada" });
   }

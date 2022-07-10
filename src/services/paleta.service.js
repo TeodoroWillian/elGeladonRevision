@@ -1,4 +1,4 @@
-const paletas = [
+/* const paletas = [
   {
     id: 1,
     sabor: "Açaí com Leite Condensado",
@@ -23,14 +23,17 @@ const paletas = [
     foto: "assets/images/chocolate-belga.png",
     preco: 7.0,
   },
-];
+]; */
+const Paletas = require('../models/Paleta');
 
-const findAllPaletasService = () => {
+const findAllPaletasService = async() => {
+  const paletas = await Paletas.find();
   return paletas;
 };
 
-const findByIdPaletaService = (parametroId) => {
-  return paletas.find((paleta) => paleta.id === parametroId);
+const findByIdPaletaService = async (parametroId) => {
+  const paleta = await Paletas.findById(parametroId)
+  return paleta;
 };
 
 const createPaletaService = (newPaleta) => {
