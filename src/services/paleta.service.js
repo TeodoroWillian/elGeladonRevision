@@ -36,23 +36,18 @@ const findByIdPaletaService = async (parametroId) => {
   return paleta;
 };
 
-const createPaletaService = (newPaleta) => {
-  const newId = paletas.length + 1;
-  newPaleta.id = newId;
-  paletas.push(newPaleta);
-  return newPaleta;
+const createPaletaService = async (newPaleta) => {
+  const paletaCreated = await Paletas.create(newPaleta);
+  return paletaCreated;
 };
 
-const updatePaletaService = (id, paletaEdited) => {
-  paletaEdited['id'] = id;
-  const paletaIndex = paletas.findIndex((paleta) => paleta.id == id);
-  paletas[paletaIndex] = paletaEdited;
-  return paletaEdited;
+const updatePaletaService = async (id, paletaEdited) => {
+  const paletaUpdate = await Paletas.findByIdAndUpdate(id,paletaEdited);
+  return paletaUpdate;
 };
 
-const deletePaletaService = (id) => {
-    const paletaIndex = paletas.findIndex((paleta) => paleta.id ==id);
-    return paletas.splice(paletaIndex, 1);
+const deletePaletaService = async (id) => {
+   return await Paletas.findByIdAndDelete(id);
 };
 module.exports = {
   findAllPaletasService,
